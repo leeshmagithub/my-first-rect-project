@@ -2,30 +2,26 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [str, setStr] = useState("");
-  const [stringSet, setStringSet] = useState(false);
+  const [apiResult, setApiResult] = useState({});
 
   useEffect(() => {
-    console.log(str, stringSet);
-  }, [str, stringSet]);
-
-  const onChangeHandler = (evt) => {
-    setStr(evt.target.value);
-    if (evt.target.value !== "" && evt.target.value !==  null && evt.target.value !== undefined) {
-      setStringSet(true);
-    } else {
-      setStringSet(false);
-    }
-  };
+    fetch("https://reqres.in/api/users/1")
+      .then((res) => res.json())
+      .then((data) => {
+        setTimeout(() => {
+          setApiResult(data.data);
+          console.log(data.data);
+        }, 3000);
+      });
+  }, []);
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Enter text to set.."
-        onChange={onChangeHandler}
-      ></input>
-      <h1>{str}</h1>
+      <div>
+        {apiResult.first_name + " "}
+        {apiResult.last_name}
+      </div>
+      <img src={apiResult.avatar} alt=""></img>
     </div>
   );
 }
