@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
+  const [str, setStr] = useState("");
+  const [stringSet, setStringSet] = useState(false);
+
+  useEffect(() => {
+    console.log(str, stringSet);
+  }, [str, stringSet]);
+
+  const onChangeHandler = (evt) => {
+    setStr(evt.target.value);
+    if (evt.target.value !== "" && evt.target.value !==  null && evt.target.value !== undefined) {
+      setStringSet(true);
+    } else {
+      setStringSet(false);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        type="text"
+        placeholder="Enter text to set.."
+        onChange={onChangeHandler}
+      ></input>
+      <h1>{str}</h1>
     </div>
   );
 }
