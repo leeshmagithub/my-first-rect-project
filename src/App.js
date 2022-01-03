@@ -1,31 +1,32 @@
-import { useEffect, useState } from "react";
+import { NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
+import About from "./components/About";
+import ContactUs from "./components/ContactUs";
+import Home from "./components/Home";
+import Login from "./components/Login";
 
 function App() {
-  const [str, setStr] = useState("");
-  const [stringSet, setStringSet] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(str, stringSet);
-  }, [str, stringSet]);
-
-  const onChangeHandler = (evt) => {
-    setStr(evt.target.value);
-    if (evt.target.value !== "" && evt.target.value !==  null && evt.target.value !== undefined) {
-      setStringSet(true);
-    } else {
-      setStringSet(false);
-    }
-  };
+  function navigateHandler() {
+    navigate("/Login");
+  }
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Enter text to set.."
-        onChange={onChangeHandler}
-      ></input>
-      <h1>{str}</h1>
+      <NavLink to="/Home">Home</NavLink>
+      <br></br>
+      <NavLink to="/About">About</NavLink>
+      <br></br>
+      <NavLink to="/ContactUS">ContactUS</NavLink>
+      <br></br>
+      <button onClick={navigateHandler}>login</button>
+      <Routes>
+        <Route path="/Home" element={<Home />}></Route>
+        <Route path="/About" element={<About />}></Route>
+        <Route path="/ContactUS" element={<ContactUs />}></Route>
+        <Route path="/Login" element={<Login />}></Route>
+      </Routes>
     </div>
   );
 }
